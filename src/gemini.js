@@ -20,17 +20,9 @@ const gemini25Json = genAI.getGenerativeModel({
 const gemini25Text = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // Tier 3: Groq — Llama 3.3 (free)
-const groqAI = new OpenAI({
-  baseURL: "https://api.groq.com/openai/v1",
-  apiKey: process.env.GROQ_API_KEY,
-});
-
+const groqAI = null;
 // Tier 4: OpenRouter — GPT-4o-mini (paid fallback)
-const backupAI = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY,
-});
-
+const backupAI = null;
 // ---------------------------------------------------------
 // Feature 2: WhatsApp Markdown Formatter
 // Runs only on summary/chat responses (isSummaryRequest = true).
