@@ -523,7 +523,7 @@ app.post("/webhook", async (req, res) => {
 
       const newTimestamp = buildReminderDate(time, date || null);
       const { error: insertErr } = await supabase.from("personal_reminders").insert([{
-        phone: targetPhone,
+        phone: targetPhone || senderPhone,
         message: existing.message,
         reminder_time: newTimestamp,
         group_name: existing.group_name,
