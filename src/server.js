@@ -726,7 +726,7 @@ app.post("/webhook", async (req, res) => {
     }
 
     if (intent === "routine") {
-      cconst { error } = await supabase.from("personal_reminders").insert([{
+      const { error } = await supabase.from("personal_reminders").insert([{
   phone: targetPhone || senderPhone,
   message: taskOrMessage,
   reminder_time: dbTimestamp,
