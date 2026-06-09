@@ -804,12 +804,12 @@ app.post("/webhook", async (req, res) => {
       if (!time) return await respond("Please specify a time for the reminder.");
       if (!taskOrMessage || taskOrMessage.trim() === "") return await respond("Please specify what the reminder is for.");
       const dbTimestamp = buildReminderDate(time, date || null);
-      const { error } = await supabase.from("personal_reminders").insert([{
-        phone: targetPhone,
-        message: taskOrMessage,
-        reminder_time: dbTimestamp,
-        group_name: finalName.toLowerCase() === "you" ? null : finalName,
-      }]);
+     const { error } = await supabase.from("personal_reminders").insert([{
+  phone: targetPhone || senderPhone,
+  message: taskOrMessage,
+  reminder_time: dbTimestamp,
+  group_name: finalName.toLowerCase() === "you" ? null : finalName,
+}]);
       return await respond(
         !error
           ? `Reminder set for ${formatTimeDisplay(time)}.`
