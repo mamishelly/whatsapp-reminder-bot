@@ -712,12 +712,12 @@ app.post("/webhook", async (req, res) => {
 
     if (intent === "event") {
       const eventPersonName = finalName.toLowerCase() === "you" ? "Viswanath" : finalName;
-      const { error } = await supabase.from("special_events").insert([{
-        phone: targetPhone,
-        event_type: taskOrMessage,
-        person_name: eventPersonName,
-        event_date: date,
-      }]);
+      const { error } = await supabase.from("personal_reminders").insert([{
+  phone: targetPhone || senderPhone,
+  message: taskOrMessage,
+  reminder_time: dbTimestamp,
+  group_name: finalName.toLowerCase() === "you" ? null : finalName,
+}]);
       return await respond(
         !error
           ? `Saved ${eventPersonName}'s ${taskOrMessage} on ${date}.`
@@ -726,11 +726,12 @@ app.post("/webhook", async (req, res) => {
     }
 
     if (intent === "routine") {
-      const { error } = await supabase.from("daily_routines").insert([{
-        phone: targetPhone,
-        task_name: taskOrMessage,
-        reminder_time: time,
-      }]);
+      cconst { error } = await supabase.from("personal_reminders").insert([{
+  phone: targetPhone || senderPhone,
+  message: taskOrMessage,
+  reminder_time: dbTimestamp,
+  group_name: finalName.toLowerCase() === "you" ? null : finalName,
+}]);
       return await respond(
         !error
           ? `Routine set — ${taskOrMessage} daily at ${formatTimeDisplay(time)}.`
